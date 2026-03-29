@@ -7,7 +7,7 @@ import { useStorageReady } from '@/components/layout/StorageInitializer';
 import { HackathonDetail } from '@/types/hackathon';
 import { HackathonListItem } from '@/types/hackathon';
 import DetailHeader from '@/components/detail/DetailHeader';
-import TabNavigation from '@/components/detail/TabNavigation';
+import TabNavigation, { type TabKey } from '@/components/detail/TabNavigation';
 import OverviewTab from '@/components/detail/tabs/OverviewTab';
 import TeamsTab from '@/components/detail/tabs/TeamsTab';
 import EvalTab from '@/components/detail/tabs/EvalTab';
@@ -16,8 +16,6 @@ import InfoTab from '@/components/detail/tabs/InfoTab';
 import ScheduleTab from '@/components/detail/tabs/ScheduleTab';
 import SubmitTab from '@/components/detail/tabs/SubmitTab';
 import LeaderboardTab from '@/components/detail/tabs/LeaderboardTab';
-
-type TabKey = 'overview' | 'teams' | 'eval' | 'prize' | 'info' | 'schedule' | 'submit' | 'leaderboard';
 
 export default function HackathonDetailPage() {
   const ready = useStorageReady();

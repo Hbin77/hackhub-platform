@@ -1,4 +1,5 @@
 import { EvalSection } from '@/types/hackathon';
+import SectionCard from '@/components/common/SectionCard';
 
 interface EvalTabProps {
   eval: EvalSection;
@@ -9,15 +10,15 @@ export default function EvalTab({ eval: evalSection }: EvalTabProps) {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border bg-surface p-6">
+      <SectionCard>
         <h2 className="mb-2 text-lg font-semibold text-text">{evalSection.metricName}</h2>
         <p className="whitespace-pre-line text-sm leading-relaxed text-text-secondary">
           {evalSection.description}
         </p>
-      </section>
+      </SectionCard>
 
       {isVote && evalSection.scoreDisplay && (
-        <section className="rounded-xl border border-border bg-surface p-6">
+        <SectionCard>
           <h3 className="mb-4 text-base font-semibold text-text">
             {evalSection.scoreDisplay.label}
           </h3>
@@ -39,11 +40,11 @@ export default function EvalTab({ eval: evalSection }: EvalTabProps) {
               </div>
             ))}
           </div>
-        </section>
+        </SectionCard>
       )}
 
       {!isVote && evalSection.limits && (
-        <section className="rounded-xl border border-border bg-surface p-6">
+        <SectionCard>
           <h3 className="mb-4 text-base font-semibold text-text">제출 제한</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-lg bg-surface-elevated p-4">
@@ -59,7 +60,7 @@ export default function EvalTab({ eval: evalSection }: EvalTabProps) {
               </p>
             </div>
           </div>
-        </section>
+        </SectionCard>
       )}
     </div>
   );

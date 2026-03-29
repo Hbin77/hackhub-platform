@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { HackathonListItem } from '@/types/hackathon';
-import { Team } from '@/types/team';
-import { addTeam, isSafeUrl } from '@/lib/storage';
+import { Team, ContactType } from '@/types/team';
+import { addTeam } from '@/lib/storage';
+import { isSafeUrl } from '@/lib/validation';
 
 interface TeamCreateModalProps {
   hackathons: HackathonListItem[];
@@ -25,7 +26,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
   const [intro, setIntro] = useState('');
   const [memberCount, setMemberCount] = useState(1);
   const [lookingFor, setLookingFor] = useState('');
-  const [contactType, setContactType] = useState('discord');
+  const [contactType, setContactType] = useState<ContactType>('discord');
   const [contactUrl, setContactUrl] = useState('');
 
   function handleSubmit(e: React.FormEvent) {
@@ -139,7 +140,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
               <label className="mb-1 block text-sm font-medium text-text">연락 수단</label>
               <select
                 value={contactType}
-                onChange={e => setContactType(e.target.value)}
+                onChange={e => setContactType(e.target.value as ContactType)}
                 className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="discord">Discord</option>

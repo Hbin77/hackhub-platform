@@ -1,3 +1,5 @@
+export type ContactType = 'discord' | 'kakao' | 'email' | 'other';
+
 export interface Team {
   teamCode: string;
   hackathonSlug: string;
@@ -7,7 +9,7 @@ export interface Team {
   lookingFor: string[];
   intro: string;
   contact: {
-    type: string;
+    type: ContactType;
     url: string;
   };
   createdAt: string;

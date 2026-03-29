@@ -36,10 +36,12 @@ export interface EvalSection {
   };
 }
 
+export type ArtifactFormat = 'zip' | 'text' | 'url' | 'web' | 'pdf' | 'pdf_url' | 'text_or_url';
+
 export interface SubmissionItem {
   key: string;
   title: string;
-  format: string;
+  format: ArtifactFormat;
 }
 
 export interface HackathonDetail {

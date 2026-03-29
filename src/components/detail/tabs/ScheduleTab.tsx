@@ -1,6 +1,7 @@
 'use client';
 
 import { formatDate, isDatePast } from '@/lib/date';
+import SectionCard from '@/components/common/SectionCard';
 
 interface ScheduleTabProps {
   schedule: {
@@ -14,7 +15,7 @@ interface ScheduleTabProps {
 
 export default function ScheduleTab({ schedule }: ScheduleTabProps) {
   return (
-    <div className="rounded-xl border border-border bg-surface p-6">
+    <SectionCard>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-text">일정</h2>
         <span className="text-xs text-text-secondary">{schedule.timezone}</span>
@@ -54,6 +55,6 @@ export default function ScheduleTab({ schedule }: ScheduleTabProps) {
           })}
         </div>
       </div>
-    </div>
+    </SectionCard>
   );
 }

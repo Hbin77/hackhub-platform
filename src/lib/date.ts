@@ -1,16 +1,8 @@
-import { format, formatDistanceToNow, isPast, parseISO } from 'date-fns';
+import { format, isPast, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
 export function formatDate(iso: string): string {
   return format(parseISO(iso), 'yyyy.MM.dd HH:mm', { locale: ko });
-}
-
-export function formatDateShort(iso: string): string {
-  return format(parseISO(iso), 'MM.dd', { locale: ko });
-}
-
-export function relativeTime(iso: string): string {
-  return formatDistanceToNow(parseISO(iso), { addSuffix: true, locale: ko });
 }
 
 export function isDatePast(iso: string): boolean {

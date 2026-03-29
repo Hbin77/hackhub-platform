@@ -1,11 +1,12 @@
 import { Team } from '@/types/team';
-import { isSafeUrl } from '@/lib/storage';
+import { isSafeUrl } from '@/lib/validation';
 
 interface TeamCardProps {
   team: Team;
+  showContact?: boolean;
 }
 
-export default function TeamCard({ team }: TeamCardProps) {
+export default function TeamCard({ team, showContact = true }: TeamCardProps) {
   return (
     <div className="flex flex-col rounded-xl border border-border bg-surface p-5 transition-shadow hover:shadow-md">
       <div className="mb-3 flex items-center justify-between">
@@ -46,23 +47,25 @@ export default function TeamCard({ team }: TeamCardProps) {
         </div>
       )}
 
-      <div className="mt-auto">
-        {isSafeUrl(team.contact.url) ? (
-          <a
-            href={team.contact.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-hover"
-          >
-            연락하기
-            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-        ) : (
-          <span className="text-sm text-text-secondary">{team.contact.url}</span>
-        )}
-      </div>
+      {showContact && (
+        <div className="mt-auto">
+          {isSafeUrl(team.contact.url) ? (
+            <a
+              href={team.contact.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-hover"
+            >
+              연락하기
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          ) : (
+            <span className="text-sm text-text-secondary">{team.contact.url}</span>
+          )}
+        </div>
+      )}
     </div>
   );
 }

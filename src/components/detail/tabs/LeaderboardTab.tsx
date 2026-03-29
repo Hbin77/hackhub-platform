@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getLeaderboard, isSafeUrl } from '@/lib/storage';
+import { getLeaderboard } from '@/lib/storage';
+import { isSafeUrl } from '@/lib/validation';
 import { Leaderboard, LeaderboardEntry } from '@/types/leaderboard';
 import { formatDate } from '@/lib/date';
 import EmptyState from '@/components/common/EmptyState';
