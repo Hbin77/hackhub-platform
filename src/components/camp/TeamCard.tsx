@@ -8,21 +8,21 @@ interface TeamCardProps {
 
 export default function TeamCard({ team, showContact = true }: TeamCardProps) {
   return (
-    <div className="flex flex-col rounded-xl border border-border bg-surface p-5 transition-shadow hover:shadow-md">
+    <div className="flex flex-col rounded-xl glass glass-hover p-5 transition-all">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-base font-semibold text-text">{team.name}</h3>
         <span
           className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
             team.isOpen
-              ? 'bg-green-100 text-green-800'
-              : 'bg-gray-100 text-gray-600'
+              ? 'bg-success/15 text-success'
+              : 'bg-bg-elevated text-text-tertiary'
           }`}
         >
           {team.isOpen ? '모집중' : '모집완료'}
         </span>
       </div>
 
-      <p className="mb-1 text-xs text-text-secondary">{team.hackathonSlug}</p>
+      <p className="mb-1 text-xs text-text-tertiary">{team.hackathonSlug}</p>
       <p className="mb-3 text-sm leading-relaxed text-text-secondary">{team.intro}</p>
 
       <div className="mb-3 flex items-center gap-3 text-xs text-text-secondary">
@@ -48,13 +48,13 @@ export default function TeamCard({ team, showContact = true }: TeamCardProps) {
       )}
 
       {showContact && (
-        <div className="mt-auto">
+        <div className="mt-auto pt-3 border-t border-border">
           {isSafeUrl(team.contact.url) ? (
             <a
               href={team.contact.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-hover"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover transition-colors"
             >
               연락하기
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

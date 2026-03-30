@@ -37,7 +37,7 @@ export default function SubmitTab({ slug, submit }: SubmitTabProps) {
   return (
     <div className="space-y-6">
       {submit.guide.length > 0 && (
-        <section className="rounded-xl border border-border bg-surface p-6">
+        <section className="rounded-xl border border-border bg-bg-surface p-6">
           <h2 className="mb-3 text-lg font-semibold text-text">제출 가이드</h2>
           <ul className="space-y-2 text-sm text-text-secondary">
             {submit.guide.map((g, i) => (

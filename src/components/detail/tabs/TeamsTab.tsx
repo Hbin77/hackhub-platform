@@ -25,7 +25,7 @@ export default function TeamsTab({ slug, campEnabled }: TeamsTabProps) {
         <div className="flex justify-end">
           <Link
             href={`/camp?hackathon=${slug}`}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-medium text-accent transition-all hover:bg-accent/20 hover:border-accent/50"
           >
             팀 모집 캠프로 이동
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

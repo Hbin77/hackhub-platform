@@ -38,15 +38,15 @@ export default function HackathonDetailPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-[50vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      <div className="flex min-h-[50vh] items-center justify-center bg-bg-base">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
       </div>
     );
   }
 
   if (!detail) {
     return (
-      <div className="flex min-h-[50vh] flex-col items-center justify-center text-text-secondary">
+      <div className="flex min-h-[50vh] flex-col items-center justify-center bg-bg-base text-text-secondary">
         <p className="text-lg">해커톤을 찾을 수 없습니다.</p>
       </div>
     );
@@ -74,14 +74,16 @@ export default function HackathonDetailPage() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
-      <DetailHeader
-        title={detail.title}
-        status={listItem?.status ?? 'upcoming'}
-        period={listItem?.period}
-      />
-      <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
-      <div className="mt-6">{renderTab()}</div>
+    <div className="min-h-screen bg-bg-base">
+      <div className="mx-auto max-w-5xl px-4 py-8">
+        <DetailHeader
+          title={detail.title}
+          status={listItem?.status ?? 'upcoming'}
+          period={listItem?.period}
+        />
+        <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="mt-6 animate-float-up">{renderTab()}</div>
+      </div>
     </div>
   );
 }

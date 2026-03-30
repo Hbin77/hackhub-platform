@@ -18,7 +18,7 @@ interface TabNavigationProps {
 
 export default function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
   return (
-    <div className="overflow-x-auto border-b border-border">
+    <div className="overflow-x-auto rounded-xl bg-bg-surface border border-border">
       <nav className="flex min-w-max gap-0" role="tablist">
         {TABS.map(tab => {
           const isActive = tab.key === activeTab;
@@ -28,7 +28,7 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
               role="tab"
               aria-selected={isActive}
               onClick={() => onTabChange(tab.key)}
-              className={`relative px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`relative px-5 py-3.5 text-sm font-medium whitespace-nowrap transition-colors ${
                 isActive
                   ? 'text-primary'
                   : 'text-text-secondary hover:text-text'
@@ -36,7 +36,7 @@ export default function TabNavigation({ activeTab, onTabChange }: TabNavigationP
             >
               {tab.label}
               {isActive && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t" />
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-t" />
               )}
             </button>
           );

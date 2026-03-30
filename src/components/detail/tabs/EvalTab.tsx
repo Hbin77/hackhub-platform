@@ -27,14 +27,14 @@ export default function EvalTab({ eval: evalSection }: EvalTabProps) {
               <div key={item.key} className="flex items-center gap-3">
                 <span className="w-24 shrink-0 text-sm text-text-secondary">{item.label}</span>
                 <div className="flex-1">
-                  <div className="h-3 w-full overflow-hidden rounded-full bg-surface-elevated">
+                  <div className="h-3 w-full overflow-hidden rounded-full bg-bg-elevated">
                     <div
-                      className="h-full rounded-full bg-primary transition-all"
+                      className="h-full rounded-full gradient-bg transition-all"
                       style={{ width: `${item.weightPercent}%` }}
                     />
                   </div>
                 </div>
-                <span className="w-12 shrink-0 text-right text-sm font-medium text-text">
+                <span className="w-12 shrink-0 text-right font-display text-sm font-semibold text-text">
                   {item.weightPercent}%
                 </span>
               </div>
@@ -47,16 +47,16 @@ export default function EvalTab({ eval: evalSection }: EvalTabProps) {
         <SectionCard>
           <h3 className="mb-4 text-base font-semibold text-text">제출 제한</h3>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg bg-surface-elevated p-4">
+            <div className="rounded-xl bg-bg-elevated border border-border p-5">
               <p className="mb-1 text-xs text-text-secondary">최대 실행 시간</p>
-              <p className="text-lg font-semibold text-text">
-                {evalSection.limits.maxRuntimeSec}초
+              <p className="font-display text-2xl font-bold text-text">
+                {evalSection.limits.maxRuntimeSec}<span className="ml-1 text-sm text-text-secondary">초</span>
               </p>
             </div>
-            <div className="rounded-lg bg-surface-elevated p-4">
+            <div className="rounded-xl bg-bg-elevated border border-border p-5">
               <p className="mb-1 text-xs text-text-secondary">일일 최대 제출 횟수</p>
-              <p className="text-lg font-semibold text-text">
-                {evalSection.limits.maxSubmissionsPerDay}회
+              <p className="font-display text-2xl font-bold text-text">
+                {evalSection.limits.maxSubmissionsPerDay}<span className="ml-1 text-sm text-text-secondary">회</span>
               </p>
             </div>
           </div>

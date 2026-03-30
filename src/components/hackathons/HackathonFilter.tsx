@@ -19,10 +19,10 @@ export default function HackathonFilter({ activeFilter, onChange }: HackathonFil
         <button
           key={value}
           onClick={() => onChange(value)}
-          className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+          className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
             activeFilter === value
-              ? 'bg-primary text-white'
-              : 'bg-surface-elevated text-text-secondary hover:bg-border'
+              ? 'gradient-bg text-white shadow-lg shadow-primary/20'
+              : 'bg-bg-elevated text-text-secondary hover:text-text'
           }`}
         >
           {label}

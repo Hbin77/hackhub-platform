@@ -34,17 +34,64 @@ export default function LeaderboardTab({ slug, note }: LeaderboardTabProps) {
     );
   }
 
+  const top3 = entries.filter(e => e.rank <= 3);
+  const rest = entries.filter(e => e.rank > 3);
+
   return (
-    <div className="space-y-4">
-      <div className="overflow-x-auto rounded-xl border border-border bg-surface">
+    <div className="space-y-6">
+      {/* TOP 3 Podium */}
+      {top3.length > 0 && (
+        <div className="grid gap-4 sm:grid-cols-3">
+          {top3.map((entry: LeaderboardEntry) => {
+            const medalConfig = getMedalConfig(entry.rank);
+            return (
+              <div
+                key={`${entry.rank}-${entry.teamName}`}
+                className={`relative rounded-xl border p-5 text-center transition-all ${medalConfig.borderClass} ${medalConfig.bgClass}`}
+              >
+                {entry.rank === 1 && (
+                  <div className="absolute inset-0 rounded-xl shadow-[0_0_30px_rgba(255,215,0,0.15)] pointer-events-none" />
+                )}
+                <div className={`mb-2 text-3xl`}>{medalConfig.emoji}</div>
+                <p className="font-display text-xs font-medium text-text-secondary mb-1">
+                  {entry.rank === 1 ? '1st Place' : entry.rank === 2 ? '2nd Place' : '3rd Place'}
+                </p>
+                <h3 className="text-base font-bold text-text mb-2">{entry.teamName}</h3>
+                <p className={`font-display text-xl font-bold ${medalConfig.scoreColor}`}>
+                  {entry.score.toFixed(2)}
+                </p>
+                {entry.scoreBreakdown && (
+                  <div className="mt-2 flex justify-center gap-3 text-xs text-text-secondary">
+                    <span>참가자 {entry.scoreBreakdown.participant?.toFixed(2) ?? '-'}</span>
+                    <span>심사위원 {entry.scoreBreakdown.judge?.toFixed(2) ?? '-'}</span>
+                  </div>
+                )}
+                {entry.artifacts && (
+                  <div className="mt-2 flex justify-center gap-2">
+                    {entry.artifacts.webUrl && isSafeUrl(entry.artifacts.webUrl) && (
+                      <a href={entry.artifacts.webUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-accent hover:underline">Web</a>
+                    )}
+                    {entry.artifacts.pdfUrl && isSafeUrl(entry.artifacts.pdfUrl) && (
+                      <a href={entry.artifacts.pdfUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-accent hover:underline">PDF</a>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Full Table */}
+      <div className="overflow-x-auto rounded-xl border border-border bg-bg-surface">
         {board?.updatedAt && (
-          <div className="border-b border-border px-6 py-3 text-xs text-text-secondary">
+          <div className="border-b border-border px-6 py-3 text-xs text-text-tertiary">
             최종 업데이트: {formatDate(board.updatedAt)}
           </div>
         )}
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border bg-surface-elevated text-left">
+            <tr className="border-b border-border bg-bg-elevated text-left">
               <th className="px-4 py-3 font-medium text-text-secondary w-16">순위</th>
               <th className="px-4 py-3 font-medium text-text-secondary">팀</th>
               <th className="px-4 py-3 font-medium text-text-secondary text-right">점수</th>
@@ -61,13 +108,18 @@ export default function LeaderboardTab({ slug, note }: LeaderboardTabProps) {
             </tr>
           </thead>
           <tbody>
-            {entries.map((entry: LeaderboardEntry) => (
-              <tr key={`${entry.rank}-${entry.teamName}`} className="border-b border-border last:border-b-0 hover:bg-surface-elevated/50">
+            {entries.map((entry: LeaderboardEntry, idx: number) => (
+              <tr
+                key={`${entry.rank}-${entry.teamName}`}
+                className={`border-b border-border last:border-b-0 transition-colors hover:bg-bg-elevated/50 ${
+                  idx % 2 === 0 ? 'bg-bg-surface' : 'bg-bg-base'
+                }`}
+              >
                 <td className="px-4 py-3">
                   <RankBadge rank={entry.rank} />
                 </td>
                 <td className="px-4 py-3 font-medium text-text">{entry.teamName}</td>
-                <td className="px-4 py-3 text-right font-semibold text-primary">
+                <td className="px-4 py-3 text-right font-display font-bold text-primary">
                   {entry.score.toFixed(2)}
                 </td>
                 {hasBreakdown && (
@@ -89,7 +141,7 @@ export default function LeaderboardTab({ slug, note }: LeaderboardTabProps) {
                             href={entry.artifacts.webUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                            className="inline-flex items-center gap-1 text-xs text-accent hover:underline"
                           >
                             Web
                           </a>
@@ -99,7 +151,7 @@ export default function LeaderboardTab({ slug, note }: LeaderboardTabProps) {
                             href={entry.artifacts.pdfUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                            className="inline-flex items-center gap-1 text-xs text-accent hover:underline"
                           >
                             PDF
                           </a>
@@ -126,15 +178,42 @@ export default function LeaderboardTab({ slug, note }: LeaderboardTabProps) {
   );
 }
 
+function getMedalConfig(rank: number) {
+  if (rank === 1) return {
+    emoji: '🥇',
+    borderClass: 'border-gold',
+    bgClass: 'bg-bg-surface',
+    scoreColor: 'text-gold',
+  };
+  if (rank === 2) return {
+    emoji: '🥈',
+    borderClass: 'border-silver',
+    bgClass: 'bg-bg-surface',
+    scoreColor: 'text-silver',
+  };
+  if (rank === 3) return {
+    emoji: '🥉',
+    borderClass: 'border-bronze',
+    bgClass: 'bg-bg-surface',
+    scoreColor: 'text-bronze',
+  };
+  return {
+    emoji: '',
+    borderClass: 'border-border',
+    bgClass: 'bg-bg-surface',
+    scoreColor: 'text-primary',
+  };
+}
+
 function RankBadge({ rank }: { rank: number }) {
   if (rank === 1) {
-    return <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-100 text-xs font-bold text-yellow-700">1</span>;
+    return <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-gold/15 font-display text-xs font-bold text-gold">1</span>;
   }
   if (rank === 2) {
-    return <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-600">2</span>;
+    return <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-silver/15 font-display text-xs font-bold text-silver">2</span>;
   }
   if (rank === 3) {
-    return <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 text-xs font-bold text-amber-700">3</span>;
+    return <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-bronze/15 font-display text-xs font-bold text-bronze">3</span>;
   }
-  return <span className="text-sm text-text-secondary">{rank}</span>;
+  return <span className="font-display text-sm text-text-secondary">{rank}</span>;
 }

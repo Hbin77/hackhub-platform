@@ -7,7 +7,7 @@ interface SectionCardProps {
 
 export default function SectionCard({ children, className = '' }: SectionCardProps) {
   return (
-    <div className={`rounded-xl border border-border bg-surface p-6 ${className}`}>
+    <div className={`rounded-xl border border-border bg-bg-surface p-6 ${className}`}>
       {children}
     </div>
   );

@@ -24,20 +24,26 @@ export default function OverviewTab({ overview }: OverviewTabProps) {
 
       <SectionCard>
         <h2 className="mb-3 text-lg font-semibold text-text">팀 구성 정책</h2>
-        <ul className="space-y-2 text-sm text-text-secondary">
-          <li className="flex items-center gap-2">
-            <span className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-xs ${teamPolicy.allowSolo ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="flex items-center gap-3 rounded-lg bg-bg-elevated p-4">
+            <span className={`inline-flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold ${teamPolicy.allowSolo ? 'bg-success/15 text-success' : 'bg-error/15 text-error'}`}>
               {teamPolicy.allowSolo ? '○' : '✕'}
             </span>
-            개인 참가 {teamPolicy.allowSolo ? '가능' : '불가'}
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary-light text-xs text-primary">
+            <div>
+              <p className="text-sm font-medium text-text">개인 참가</p>
+              <p className="text-xs text-text-secondary">{teamPolicy.allowSolo ? '가능' : '불가'}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-lg bg-bg-elevated p-4">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary-light text-sm font-bold text-primary">
               {teamPolicy.maxTeamSize}
             </span>
-            최대 팀 인원: {teamPolicy.maxTeamSize}명
-          </li>
-        </ul>
+            <div>
+              <p className="text-sm font-medium text-text">최대 팀 인원</p>
+              <p className="text-xs text-text-secondary">{teamPolicy.maxTeamSize}명</p>
+            </div>
+          </div>
+        </div>
       </SectionCard>
     </div>
   );

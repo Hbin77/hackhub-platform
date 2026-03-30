@@ -1,7 +1,7 @@
-const PLACE_ICONS: Record<string, { emoji: string; color: string }> = {
-  '1st': { emoji: '🥇', color: 'text-yellow-500' },
-  '2nd': { emoji: '🥈', color: 'text-gray-400' },
-  '3rd': { emoji: '🥉', color: 'text-amber-600' },
+const PLACE_STYLES: Record<string, { emoji: string; borderColor: string; glowClass: string }> = {
+  '1st': { emoji: '🥇', borderColor: 'border-gold', glowClass: 'shadow-[0_0_20px_rgba(255,215,0,0.15)]' },
+  '2nd': { emoji: '🥈', borderColor: 'border-silver', glowClass: '' },
+  '3rd': { emoji: '🥉', borderColor: 'border-bronze', glowClass: '' },
 };
 
 function formatKRW(amount: number): string {
@@ -19,19 +19,21 @@ export default function PrizeTab({ items }: PrizeTabProps) {
   return (
     <div className="space-y-3">
       {items.map((item, idx) => {
-        const icon = PLACE_ICONS[item.place];
+        const style = PLACE_STYLES[item.place];
         return (
           <div
             key={idx}
-            className="flex items-center justify-between rounded-xl border border-border bg-surface p-5 transition-shadow hover:shadow-sm"
+            className={`flex items-center justify-between rounded-xl border bg-bg-surface p-5 transition-all hover:bg-bg-elevated ${
+              style ? `${style.borderColor} ${style.glowClass}` : 'border-border'
+            }`}
           >
             <div className="flex items-center gap-3">
               <span className="text-2xl">
-                {icon ? icon.emoji : '🏅'}
+                {style ? style.emoji : '🏅'}
               </span>
               <span className="text-base font-semibold text-text">{item.place}</span>
             </div>
-            <span className="text-lg font-bold text-primary">
+            <span className="font-display text-xl font-bold text-accent">
               {formatKRW(item.amountKRW)}
             </span>
           </div>

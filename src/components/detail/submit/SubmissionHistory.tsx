@@ -20,16 +20,16 @@ export default function SubmissionHistory({ submissions }: SubmissionHistoryProp
         {submissions.map(sub => (
           <div
             key={sub.id}
-            className="flex flex-col gap-1 rounded-lg border border-border bg-surface-elevated p-4 sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-1 rounded-xl border border-border bg-bg-elevated p-4 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium text-text">{sub.teamName}</span>
-                <span className="rounded bg-primary-light px-1.5 py-0.5 text-xs text-primary">
+                <span className="rounded-md bg-primary-light px-1.5 py-0.5 text-xs font-medium text-primary">
                   {sub.artifactType}
                 </span>
                 {sub.step && (
-                  <span className="rounded bg-surface px-1.5 py-0.5 text-xs text-text-secondary">
+                  <span className="rounded-md bg-bg-surface px-1.5 py-0.5 text-xs text-text-secondary">
                     {sub.step}
                   </span>
                 )}
@@ -43,7 +43,7 @@ export default function SubmissionHistory({ submissions }: SubmissionHistoryProp
                     href={sub.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-primary hover:underline"
+                    className="text-xs text-accent hover:underline"
                   >
                     {sub.url}
                   </a>
@@ -52,10 +52,10 @@ export default function SubmissionHistory({ submissions }: SubmissionHistoryProp
                 )
               )}
               {sub.notes && (
-                <p className="text-xs text-text-secondary">{sub.notes}</p>
+                <p className="text-xs text-text-tertiary">{sub.notes}</p>
               )}
             </div>
-            <span className="shrink-0 text-xs text-text-secondary">
+            <span className="shrink-0 text-xs text-text-tertiary">
               {formatDate(sub.submittedAt)}
             </span>
           </div>

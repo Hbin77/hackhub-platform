@@ -16,10 +16,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-surface">
+    <header className="sticky top-0 z-50 glass border-b border-border">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="text-xl font-bold text-primary">
-          HackHub
+        <Link href="/" className="font-display text-xl font-bold text-text tracking-tight">
+          <span className="gradient-text">Hack</span>Hub
         </Link>
 
         {/* Desktop */}
@@ -33,8 +33,8 @@ export default function Navbar() {
                   href={href}
                   className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     active
-                      ? 'bg-primary-light text-primary'
-                      : 'text-text-secondary hover:bg-surface-elevated'
+                      ? 'text-primary'
+                      : 'text-text-secondary hover:text-text'
                   }`}
                 >
                   {label}
@@ -46,7 +46,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden rounded-lg p-2 hover:bg-surface-elevated"
+          className="md:hidden rounded-lg p-2 text-text-secondary hover:text-text"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="메뉴 열기"
         >
@@ -62,7 +62,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <ul className="border-t border-border bg-surface px-4 pb-4 md:hidden">
+        <ul className="border-t border-border bg-bg-surface px-4 pb-4 md:hidden">
           {NAV_ITEMS.map(({ href, label }) => {
             const active =
               href === '/' ? pathname === '/' : pathname.startsWith(href);
@@ -71,8 +71,8 @@ export default function Navbar() {
                 <Link
                   href={href}
                   onClick={() => setMobileOpen(false)}
-                  className={`block rounded-lg px-4 py-3 text-sm font-medium ${
-                    active ? 'text-primary bg-primary-light' : 'text-text-secondary'
+                  className={`block rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
+                    active ? 'text-primary' : 'text-text-secondary hover:text-text'
                   }`}
                 >
                   {label}

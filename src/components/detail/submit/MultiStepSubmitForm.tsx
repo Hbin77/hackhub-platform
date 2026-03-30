@@ -88,7 +88,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
           value={value}
           onChange={e => updateValue(item.key, e.target.value)}
           placeholder={`${item.title} URL을 입력하세요`}
-          className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-text placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
         />
       );
     }
@@ -99,7 +99,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
         onChange={e => updateValue(item.key, e.target.value)}
         placeholder={`${item.title} 내용을 입력하세요`}
         rows={5}
-        className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-text placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+        className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
       />
     );
   };
@@ -107,7 +107,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-xl border border-border bg-surface p-6"
+      className="rounded-xl border border-border bg-bg-surface p-6"
     >
       <h2 className="mb-4 text-lg font-semibold text-text">단계별 제출</h2>
 
@@ -118,18 +118,18 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
             <button
               type="button"
               onClick={() => setCurrentStep(idx)}
-              className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium transition-colors ${
+              className={`flex h-8 w-8 items-center justify-center rounded-lg font-display text-xs font-bold transition-all ${
                 idx === currentStep
-                  ? 'bg-primary text-white'
+                  ? 'gradient-bg text-white shadow-[0_0_12px_rgba(108,92,231,0.3)]'
                   : idx < currentStep
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-surface-elevated text-text-secondary'
+                    ? 'bg-success/15 text-success'
+                    : 'bg-bg-elevated text-text-secondary'
               }`}
             >
               {idx + 1}
             </button>
             {idx < items.length - 1 && (
-              <div className={`h-0.5 w-6 ${idx < currentStep ? 'bg-green-300' : 'bg-border'}`} />
+              <div className={`h-0.5 w-6 rounded-full ${idx < currentStep ? 'bg-success' : 'bg-border'}`} />
             )}
           </div>
         ))}
@@ -145,7 +145,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
               onChange={e => setTeamName(e.target.value)}
               placeholder="팀 이름을 입력하세요"
               maxLength={100}
-              className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-text placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               required
             />
           </div>
@@ -154,7 +154,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
         <div>
           <label className="mb-1.5 block text-sm font-medium text-text">
             {currentItem.title}
-            <span className="ml-2 text-xs font-normal text-text-secondary">({currentItem.format})</span>
+            <span className="ml-2 text-xs font-normal text-text-tertiary">({currentItem.format})</span>
           </label>
           {renderInput(currentItem)}
         </div>
@@ -164,7 +164,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
             <button
               type="button"
               onClick={handlePrev}
-              className="rounded-lg border border-border px-4 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-elevated"
+              className="rounded-lg border border-border bg-bg-elevated px-4 py-2.5 text-sm font-medium text-text transition-colors hover:border-border-hover"
             >
               이전
             </button>
@@ -182,7 +182,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
             <button
               type="submit"
               disabled={submitting || !teamName.trim()}
-              className="ml-auto rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+              className="ml-auto rounded-lg gradient-bg px-4 py-2.5 text-sm font-medium text-white transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {submitting ? '제출 중...' : '전체 제출하기'}
             </button>

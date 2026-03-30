@@ -10,31 +10,31 @@ export default function HackathonCard({ hackathon }: { hackathon: HackathonListI
   return (
     <Link
       href={detailHref}
-      className="group block overflow-hidden rounded-xl border border-border bg-surface transition-shadow hover:shadow-lg"
+      className="group glass glass-hover block overflow-hidden rounded-xl transition-all duration-300 cursor-pointer"
     >
-      <div className="aspect-[3/2] overflow-hidden bg-surface-elevated">
+      <div className="aspect-[3/2] overflow-hidden rounded-t-xl bg-bg-elevated">
         <img
           src={hackathon.thumbnailUrl}
           alt={hackathon.title}
           loading="lazy"
-          className="h-full w-full object-cover transition-transform group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-4">
-        <div className="mb-2 flex items-center gap-2">
+        <div className="mb-3 flex items-center gap-2">
           <StatusBadge status={hackathon.status} />
           {dday && (
-            <span className="text-xs font-semibold text-primary">{dday}</span>
+            <span className="text-xs font-semibold text-accent">{dday}</span>
           )}
         </div>
-        <h3 className="mb-2 line-clamp-2 text-sm font-semibold leading-snug text-text group-hover:text-primary">
+        <h3 className="mb-3 line-clamp-2 text-sm font-semibold leading-snug text-text group-hover:text-primary transition-colors">
           {hackathon.title}
         </h3>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1.5">
           {hackathon.tags.map(tag => (
             <span
               key={tag}
-              className="rounded bg-surface-elevated px-2 py-0.5 text-xs text-text-secondary"
+              className="rounded-md bg-bg-elevated px-2 py-0.5 text-xs text-text-secondary"
             >
               {tag}
             </span>

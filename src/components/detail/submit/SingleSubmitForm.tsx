@@ -35,7 +35,7 @@ export default function SingleSubmitForm({ slug, onSubmitted }: SingleSubmitForm
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-xl border border-border bg-surface p-6"
+      className="rounded-xl border border-border bg-bg-surface p-6"
     >
       <h2 className="mb-4 text-lg font-semibold text-text">파일 제출</h2>
 
@@ -48,7 +48,7 @@ export default function SingleSubmitForm({ slug, onSubmitted }: SingleSubmitForm
             onChange={e => setTeamName(e.target.value)}
             placeholder="팀 이름을 입력하세요"
             maxLength={100}
-            className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-text placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             required
           />
         </div>
@@ -61,7 +61,7 @@ export default function SingleSubmitForm({ slug, onSubmitted }: SingleSubmitForm
             onChange={e => setFileName(e.target.value)}
             placeholder="submission.zip"
             maxLength={200}
-            className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-text placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             required
           />
         </div>
@@ -74,14 +74,14 @@ export default function SingleSubmitForm({ slug, onSubmitted }: SingleSubmitForm
             placeholder="제출에 대한 메모를 남겨주세요"
             rows={3}
             maxLength={1000}
-            className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-text placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+            className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
           />
         </div>
 
         <button
           type="submit"
           disabled={submitting || !fileName.trim() || !teamName.trim()}
-          className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full rounded-lg gradient-bg px-4 py-2.5 text-sm font-medium text-white transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? '제출 중...' : '제출하기'}
         </button>

@@ -24,10 +24,10 @@ export default function InfoTab({ info }: InfoTabProps) {
         <ul className="space-y-3">
           {info.notice.map((item, idx) => (
             <li key={idx} className="flex gap-3 text-sm leading-relaxed text-text-secondary">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary-light text-xs font-medium text-primary">
+              <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary-light text-xs font-bold text-primary">
                 {idx + 1}
               </span>
-              {item}
+              <span className="pt-0.5">{item}</span>
             </li>
           ))}
         </ul>
@@ -43,7 +43,7 @@ export default function InfoTab({ info }: InfoTabProps) {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-elevated px-4 py-2.5 text-sm font-medium text-text transition-colors hover:border-primary hover:text-primary"
+                className="inline-flex items-center gap-2 rounded-lg border border-border bg-bg-elevated px-4 py-2.5 text-sm font-medium text-text transition-all hover:border-primary hover:text-primary hover:shadow-[0_0_12px_rgba(108,92,231,0.15)]"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
@@ -51,7 +51,7 @@ export default function InfoTab({ info }: InfoTabProps) {
                 {label}
               </a>
             ) : (
-              <span key={label} className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-elevated px-4 py-2.5 text-sm font-medium text-text-secondary">
+              <span key={label} className="inline-flex items-center gap-2 rounded-lg border border-border bg-bg-elevated px-4 py-2.5 text-sm font-medium text-text-secondary">
                 {label}
               </span>
             )

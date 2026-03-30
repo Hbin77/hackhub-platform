@@ -59,12 +59,14 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
     onCreated();
   }
 
+  const inputClass = "w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary";
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={onClose}>
-      <div ref={modalRef} className="w-full max-w-lg rounded-2xl bg-surface p-6 shadow-xl" onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
+      <div ref={modalRef} className="w-full max-w-lg rounded-2xl border border-border bg-bg-surface p-6 shadow-lg" onClick={e => e.stopPropagation()}>
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-text">팀 만들기</h2>
-          <button onClick={onClose} className="text-text-secondary hover:text-text">
+          <h2 className="font-display text-lg font-bold text-text">팀 만들기</h2>
+          <button onClick={onClose} className="rounded-lg p-1 text-text-secondary hover:text-text hover:bg-bg-elevated transition-colors">
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -79,7 +81,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
               value={name}
               onChange={e => setName(e.target.value)}
               required
-              className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className={inputClass}
               maxLength={50}
               placeholder="팀 이름을 입력하세요"
             />
@@ -91,7 +93,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
               value={hackathonSlug}
               onChange={e => setHackathonSlug(e.target.value)}
               required
-              className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className={inputClass}
             >
               {hackathons.map(h => (
                 <option key={h.slug} value={h.slug}>{h.title}</option>
@@ -105,7 +107,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
               value={intro}
               onChange={e => setIntro(e.target.value)}
               rows={3}
-              className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className={`${inputClass} resize-none`}
               maxLength={500}
               placeholder="팀을 소개해주세요"
             />
@@ -120,7 +122,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
                 max={10}
                 value={memberCount}
                 onChange={e => setMemberCount(Math.max(1, Math.min(10, Number(e.target.value) || 1)))}
-                className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className={inputClass}
               />
             </div>
             <div>
@@ -129,7 +131,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
                 type="text"
                 value={lookingFor}
                 onChange={e => setLookingFor(e.target.value)}
-                className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className={inputClass}
                 placeholder="프론트, 백엔드, 디자인"
               />
             </div>
@@ -141,7 +143,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
               <select
                 value={contactType}
                 onChange={e => setContactType(e.target.value as ContactType)}
-                className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className={inputClass}
               >
                 <option value="discord">Discord</option>
                 <option value="kakao">카카오톡</option>
@@ -157,7 +159,7 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
                 onChange={e => setContactUrl(e.target.value)}
                 required
                 maxLength={500}
-                className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className={inputClass}
                 placeholder="https://..."
               />
             </div>
@@ -167,13 +169,13 @@ export default function TeamCreateModal({ hackathons, onClose, onCreated }: Team
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-elevated"
+              className="rounded-lg border border-border bg-bg-elevated px-4 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:border-border-hover hover:text-text"
             >
               취소
             </button>
             <button
               type="submit"
-              className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover"
+              className="rounded-lg gradient-bg px-4 py-2.5 text-sm font-medium text-white transition-all hover:opacity-90"
             >
               팀 만들기
             </button>
