@@ -1,7 +1,8 @@
 import { Submission } from '@/types/submission';
 import { formatDate } from '@/lib/date';
-import { isSafeUrl } from '@/lib/storage';
+import { isSafeUrl } from '@/lib/validation';
 import EmptyState from '@/components/common/EmptyState';
+import SectionCard from '@/components/common/SectionCard';
 
 interface SubmissionHistoryProps {
   submissions: Submission[];
@@ -13,7 +14,7 @@ export default function SubmissionHistory({ submissions }: SubmissionHistoryProp
   }
 
   return (
-    <section className="rounded-xl border border-border bg-surface p-6">
+    <SectionCard>
       <h2 className="mb-4 text-lg font-semibold text-text">제출 내역</h2>
       <div className="space-y-3">
         {submissions.map(sub => (
@@ -60,6 +61,6 @@ export default function SubmissionHistory({ submissions }: SubmissionHistoryProp
           </div>
         ))}
       </div>
-    </section>
+    </SectionCard>
   );
 }

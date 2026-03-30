@@ -1,3 +1,5 @@
+import SectionCard from '@/components/common/SectionCard';
+
 interface OverviewTabProps {
   overview: {
     summary: string;
@@ -13,14 +15,14 @@ export default function OverviewTab({ overview }: OverviewTabProps) {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border bg-surface p-6">
+      <SectionCard>
         <h2 className="mb-3 text-lg font-semibold text-text">요약</h2>
         <p className="whitespace-pre-line text-sm leading-relaxed text-text-secondary">
           {summary}
         </p>
-      </section>
+      </SectionCard>
 
-      <section className="rounded-xl border border-border bg-surface p-6">
+      <SectionCard>
         <h2 className="mb-3 text-lg font-semibold text-text">팀 구성 정책</h2>
         <ul className="space-y-2 text-sm text-text-secondary">
           <li className="flex items-center gap-2">
@@ -36,7 +38,7 @@ export default function OverviewTab({ overview }: OverviewTabProps) {
             최대 팀 인원: {teamPolicy.maxTeamSize}명
           </li>
         </ul>
-      </section>
+      </SectionCard>
     </div>
   );
 }

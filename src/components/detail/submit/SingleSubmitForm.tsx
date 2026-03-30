@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { addSubmission, addLeaderboardEntry } from '@/lib/storage';
+import { submitAndRegister } from '@/lib/submit-service';
 
 interface SingleSubmitFormProps {
   slug: string;
@@ -18,23 +18,12 @@ export default function SingleSubmitForm({ slug, onSubmitted }: SingleSubmitForm
     e.preventDefault();
     if (!fileName.trim() || !teamName.trim()) return;
 
-    setSubmitting(true);
-
-    addSubmission({
-      id: `sub_${crypto.randomUUID()}`,
+    submitAndRegister({
       hackathonSlug: slug,
       teamName: teamName.trim(),
       artifactType: 'zip',
       fileName: fileName.trim(),
       notes: notes.trim() || undefined,
-      submittedAt: new Date().toISOString(),
-    });
-
-    addLeaderboardEntry(slug, {
-      rank: 0,
-      teamName: teamName.trim(),
-      score: 0,
-      submittedAt: new Date().toISOString(),
     });
 
     setFileName('');

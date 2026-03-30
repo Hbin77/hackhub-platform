@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getTeams } from '@/lib/storage';
 import { Team } from '@/types/team';
 import EmptyState from '@/components/common/EmptyState';
+import TeamCard from '@/components/camp/TeamCard';
 import Link from 'next/link';
 
 interface TeamsTabProps {
@@ -39,42 +40,7 @@ export default function TeamsTab({ slug, campEnabled }: TeamsTabProps) {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {teams.map(team => (
-            <div
-              key={team.teamCode}
-              className="rounded-xl border border-border bg-surface p-5 transition-shadow hover:shadow-md"
-            >
-              <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-base font-semibold text-text">{team.name}</h3>
-                <span
-                  className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                    team.isOpen ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  {team.isOpen ? '모집중' : '모집완료'}
-                </span>
-              </div>
-
-              <div className="mb-2 flex items-center gap-3 text-xs text-text-secondary">
-                <span>{team.memberCount}명</span>
-              </div>
-
-              {team.lookingFor.length > 0 && (
-                <div className="mb-3 flex flex-wrap gap-1.5">
-                  {team.lookingFor.map(role => (
-                    <span
-                      key={role}
-                      className="rounded-full bg-primary-light px-2.5 py-0.5 text-xs font-medium text-primary"
-                    >
-                      {role}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <p className="text-sm leading-relaxed text-text-secondary line-clamp-2">
-                {team.intro}
-              </p>
-            </div>
+            <TeamCard key={team.teamCode} team={team} showContact={false} />
           ))}
         </div>
       )}

@@ -4,10 +4,8 @@ import { useEffect, useState } from 'react';
 import { HackathonListItem } from '@/types/hackathon';
 import { getHackathons } from '@/lib/storage';
 import { useStorageReady } from '@/components/layout/StorageInitializer';
-import HackathonFilter from '@/components/hackathons/HackathonFilter';
+import HackathonFilter, { type FilterValue } from '@/components/hackathons/HackathonFilter';
 import HackathonGrid from '@/components/hackathons/HackathonGrid';
-
-type FilterValue = 'all' | 'ongoing' | 'ended' | 'upcoming';
 
 export default function HackathonsPage() {
   const ready = useStorageReady();

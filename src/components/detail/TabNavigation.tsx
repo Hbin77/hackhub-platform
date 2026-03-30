@@ -1,4 +1,4 @@
-type TabKey = 'overview' | 'teams' | 'eval' | 'prize' | 'info' | 'schedule' | 'submit' | 'leaderboard';
+export type TabKey = 'overview' | 'teams' | 'eval' | 'prize' | 'info' | 'schedule' | 'submit' | 'leaderboard';
 
 const TABS: { key: TabKey; label: string }[] = [
   { key: 'overview', label: '개요' },

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { SubmissionItem } from '@/types/hackathon';
-import { addSubmission, addLeaderboardEntry, isSafeUrl } from '@/lib/storage';
+import { addSubmission, addLeaderboardEntry } from '@/lib/storage';
+import { isSafeUrl } from '@/lib/validation';
 
 interface MultiStepSubmitFormProps {
   slug: string;

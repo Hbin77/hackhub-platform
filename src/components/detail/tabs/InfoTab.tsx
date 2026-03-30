@@ -1,4 +1,5 @@
-import { isSafeUrl } from '@/lib/storage';
+import { isSafeUrl } from '@/lib/validation';
+import SectionCard from '@/components/common/SectionCard';
 
 interface InfoTabProps {
   info: {
@@ -18,7 +19,7 @@ export default function InfoTab({ info }: InfoTabProps) {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border bg-surface p-6">
+      <SectionCard>
         <h2 className="mb-4 text-lg font-semibold text-text">공지사항</h2>
         <ul className="space-y-3">
           {info.notice.map((item, idx) => (
@@ -30,9 +31,9 @@ export default function InfoTab({ info }: InfoTabProps) {
             </li>
           ))}
         </ul>
-      </section>
+      </SectionCard>
 
-      <section className="rounded-xl border border-border bg-surface p-6">
+      <SectionCard>
         <h2 className="mb-4 text-lg font-semibold text-text">참고 링크</h2>
         <div className="flex flex-wrap gap-3">
           {linkItems.map(({ url, label, icon }) =>
@@ -56,7 +57,7 @@ export default function InfoTab({ info }: InfoTabProps) {
             )
           )}
         </div>
-      </section>
+      </SectionCard>
     </div>
   );
 }

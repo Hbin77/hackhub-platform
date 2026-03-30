@@ -1,4 +1,4 @@
-type FilterValue = 'all' | 'ongoing' | 'ended' | 'upcoming';
+export type FilterValue = 'all' | 'ongoing' | 'ended' | 'upcoming';
 
 const FILTERS: { value: FilterValue; label: string }[] = [
   { value: 'all', label: '전체' },
