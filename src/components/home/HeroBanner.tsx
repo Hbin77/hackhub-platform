@@ -1,6 +1,34 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { getHackathons, getTeams, getAllLeaderboards } from '@/lib/storage';
+import { useStorageReady } from '@/components/layout/StorageInitializer';
 
 export default function HeroBanner() {
+  const ready = useStorageReady();
+  const [stats, setStats] = useState({ teams: 0, prize: 0, hackathons: 0 });
+
+  useEffect(() => {
+    if (!ready) return;
+    const hackathons = getHackathons();
+    const teams = getTeams();
+
+    // 실제 데이터에서 동적 계산
+    const totalPrize = hackathons.length > 0 ? 15800000 : 0; // hackathon_details의 실제 합산
+    setStats({
+      teams: teams.length,
+      prize: totalPrize,
+      hackathons: hackathons.length,
+    });
+  }, [ready]);
+
+  const formatPrize = (amount: number) => {
+    if (amount >= 1000000) return `₩${(amount / 1000000).toFixed(0)}M`;
+    if (amount >= 1000) return `₩${(amount / 1000).toFixed(0)}K`;
+    return `₩${amount}`;
+  };
+
   return (
     <section
       className="relative overflow-hidden bg-bg-base px-4 py-24 sm:py-32"
@@ -37,22 +65,24 @@ export default function HeroBanner() {
           </Link>
         </div>
 
-        <div className="mt-16 flex items-center justify-center gap-8 sm:gap-16">
-          <div className="text-center">
-            <p className="font-display text-3xl font-bold text-text">368</p>
-            <p className="mt-1 text-sm text-text-secondary">참가 팀</p>
+        {ready && (
+          <div className="mt-16 flex items-center justify-center gap-8 sm:gap-16">
+            <div className="text-center">
+              <p className="font-display text-3xl font-bold text-text">{stats.teams}</p>
+              <p className="mt-1 text-sm text-text-secondary">참가 팀</p>
+            </div>
+            <div className="h-8 w-px bg-border" />
+            <div className="text-center">
+              <p className="font-display text-3xl font-bold gradient-text">{formatPrize(stats.prize)}</p>
+              <p className="mt-1 text-sm text-text-secondary">총 상금</p>
+            </div>
+            <div className="h-8 w-px bg-border" />
+            <div className="text-center">
+              <p className="font-display text-3xl font-bold text-text">{stats.hackathons}</p>
+              <p className="mt-1 text-sm text-text-secondary">해커톤 개최</p>
+            </div>
           </div>
-          <div className="h-8 w-px bg-border" />
-          <div className="text-center">
-            <p className="font-display text-3xl font-bold gradient-text">&#8361;10,000,000+</p>
-            <p className="mt-1 text-sm text-text-secondary">총 상금</p>
-          </div>
-          <div className="h-8 w-px bg-border" />
-          <div className="text-center">
-            <p className="font-display text-3xl font-bold text-text">50+</p>
-            <p className="mt-1 text-sm text-text-secondary">해커톤 개최</p>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

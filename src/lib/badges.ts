@@ -57,29 +57,23 @@ export function checkAndEarnBadges(): Badge[] {
     before['first-visit'] = new Date().toISOString();
   }
 
-  // first-submit: check if any submissions exist
+  // first-submit: check if user has made any submissions
   try {
     const subs = localStorage.getItem('hp_submissions');
     if (subs) {
       const parsed = JSON.parse(subs);
-      const hasSubmission = Object.values(parsed).some(
-        (arr) => Array.isArray(arr) && arr.length > 0
-      );
-      if (hasSubmission && !before['first-submit']) {
+      if (Array.isArray(parsed) && parsed.length > 0 && !before['first-submit']) {
         before['first-submit'] = new Date().toISOString();
       }
     }
   } catch { /* ignore */ }
 
-  // team-creator: check if any teams exist
+  // team-creator: check if user has created teams (more than seed data count of 4)
   try {
     const teams = localStorage.getItem('hp_teams');
     if (teams) {
       const parsed = JSON.parse(teams);
-      const hasTeam = Object.values(parsed).some(
-        (arr) => Array.isArray(arr) && arr.length > 0
-      );
-      if (hasTeam && !before['team-creator']) {
+      if (Array.isArray(parsed) && parsed.length > 4 && !before['team-creator']) {
         before['team-creator'] = new Date().toISOString();
       }
     }
@@ -96,19 +90,23 @@ export function checkAndEarnBadges(): Badge[] {
     }
   } catch { /* ignore */ }
 
-  // top-ranker: check leaderboard data
+  // top-ranker: check if user has submitted and their entry is in top 3
   try {
+    const subs = localStorage.getItem('hp_submissions');
     const lb = localStorage.getItem('hp_leaderboards');
-    if (lb) {
-      const parsed = JSON.parse(lb);
-      for (const entries of Object.values(parsed)) {
-        if (Array.isArray(entries) && entries.length > 0) {
-          const sorted = [...entries].sort(
-            (a: any, b: any) => (b.score ?? 0) - (a.score ?? 0)
-          );
-          const topThree = sorted.slice(0, 3);
-          if (topThree.length > 0 && !before['top-ranker']) {
-            before['top-ranker'] = new Date().toISOString();
+    if (subs && lb) {
+      const submissions = JSON.parse(subs);
+      const leaderboards = JSON.parse(lb);
+      if (Array.isArray(submissions) && Array.isArray(leaderboards)) {
+        const userTeams = new Set(submissions.map((s: { teamName: string }) => s.teamName));
+        for (const board of leaderboards) {
+          if (board.entries && Array.isArray(board.entries)) {
+            const userInTop3 = board.entries
+              .filter((e: { rank: number }) => e.rank <= 3)
+              .some((e: { teamName: string }) => userTeams.has(e.teamName));
+            if (userInTop3 && !before['top-ranker']) {
+              before['top-ranker'] = new Date().toISOString();
+            }
           }
         }
       }

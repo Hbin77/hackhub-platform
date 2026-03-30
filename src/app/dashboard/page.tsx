@@ -32,9 +32,13 @@ function buildDashboardData(): DashboardData {
   const teamSlugs = new Set(teams.map(t => t.hackathonSlug));
   const allSlugs = new Set([...submissionSlugs, ...teamSlugs]);
 
-  const allEntries = leaderboards.flatMap(l => l.entries);
-  const bestRank = allEntries.length > 0
-    ? Math.min(...allEntries.map(e => e.rank))
+  // 사용자가 제출한 팀 이름으로만 순위 필터링
+  const userTeamNames = new Set(submissions.map(s => s.teamName));
+  const userEntries = leaderboards
+    .flatMap(l => l.entries)
+    .filter(e => userTeamNames.has(e.teamName));
+  const bestRank = userEntries.length > 0
+    ? Math.min(...userEntries.map(e => e.rank))
     : null;
 
   const submissionEvents: TimelineEvent[] = submissions.map((s: Submission) => {

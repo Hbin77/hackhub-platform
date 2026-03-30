@@ -81,7 +81,7 @@ export default function RecommendModal({ open, onClose }: RecommendModalProps) {
       setResults(matched);
       setDirection(1);
       setStep('results');
-    }, 1500);
+    }, 400);
   }, [selected]);
 
   const handleBack = useCallback(() => {
@@ -118,7 +118,7 @@ export default function RecommendModal({ open, onClose }: RecommendModalProps) {
         <div className="flex items-center justify-between border-b border-border px-6 py-4">
           <h2 className="font-display text-lg font-bold text-text">
             {step === 'tags' && '관심 분야 선택'}
-            {step === 'loading' && 'AI 분석 중'}
+            {step === 'loading' && '매칭 분석 중'}
             {step === 'results' && '추천 결과'}
           </h2>
           <button
@@ -145,7 +145,7 @@ export default function RecommendModal({ open, onClose }: RecommendModalProps) {
                 transition={{ duration: 0.25 }}
               >
                 <p className="mb-4 text-sm text-text-secondary">
-                  관심있는 분야를 선택하면 AI가 맞춤 해커톤을 추천해드립니다.
+                  관심있는 분야를 선택하면 태그 매칭으로 해커톤을 추천해드립니다.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {INTEREST_TAGS.map((tag) => {
@@ -199,7 +199,7 @@ export default function RecommendModal({ open, onClose }: RecommendModalProps) {
                   ))}
                 </div>
                 <p className="text-sm font-medium text-text-secondary">
-                  AI가 분석 중...
+                  매칭 분석 중...
                 </p>
               </motion.div>
             )}

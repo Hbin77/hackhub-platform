@@ -19,7 +19,7 @@ export default function RecommendButton() {
         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2l2.09 6.26L20.18 9l-5.09 3.74L16.18 19 12 15.27 7.82 19l1.09-6.26L3.82 9l6.09-.74z" />
         </svg>
-        AI 추천
+        맞춤 추천
       </motion.button>
       <RecommendModal open={open} onClose={() => setOpen(false)} />
     </>

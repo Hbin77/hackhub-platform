@@ -37,7 +37,8 @@ export default function SingleSubmitForm({ slug, onSubmitted }: SingleSubmitForm
       onSubmit={handleSubmit}
       className="rounded-xl border border-border bg-bg-surface p-6"
     >
-      <h2 className="mb-4 text-lg font-semibold text-text">파일 제출</h2>
+      <h2 className="mb-2 text-lg font-semibold text-text">파일 제출</h2>
+      <p className="mb-4 text-xs text-text-tertiary rounded-lg bg-bg-elevated/50 px-3 py-2">데모 모드: 실제 파일 업로드 대신 파일명을 입력하여 제출을 시뮬레이션합니다.</p>
 
       <div className="space-y-4">
         <div>

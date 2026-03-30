@@ -17,7 +17,7 @@
         "artifacts": { "webUrl": "https://404found.vercel.app", "pdfUrl": "https://example.com/404found-solution.pdf", "planTitle": "404found 기획서" }
       },
       {
-        "rank": 2, "teamName": "LGTM", "score": 84.2, "submittedAt": "2026-04-13T09:40:00+09:00",
+        "rank": 2, "teamName": "LGTM", "score": 85.3, "submittedAt": "2026-04-13T09:40:00+09:00",
         "scoreBreakdown": { "participant": 79, "judge": 88 },
         "artifacts": { "webUrl": "https://lgtm-hack.vercel.app", "pdfUrl": "https://example.com/lgtm-solution.pdf", "planTitle": "LGTM 기획서" }
       }
