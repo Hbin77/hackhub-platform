@@ -3,6 +3,7 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ClientProviders from '@/components/layout/ClientProviders';
+import CommandPalette from '@/components/search/CommandPalette';
 
 export const metadata: Metadata = {
   title: 'HackHub - 해커톤 플랫폼',
@@ -20,6 +21,7 @@ export default function RootLayout({
         <ClientProviders>
           <Navbar />
           <main className="flex-1">{children}</main>
+          <CommandPalette />
           <Footer />
         </ClientProviders>
       </body>

@@ -8,6 +8,7 @@ import { useStorageReady } from '@/components/layout/StorageInitializer';
 import HeroBanner from '@/components/home/HeroBanner';
 import HackathonCard from '@/components/common/HackathonCard';
 import EmptyState from '@/components/common/EmptyState';
+import RecommendButton from '@/components/recommend/RecommendButton';
 
 export default function HomePage() {
   const ready = useStorageReady();
@@ -74,6 +75,7 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+      <RecommendButton />
     </div>
   );
 }

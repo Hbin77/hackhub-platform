@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import SearchTrigger from '@/components/search/SearchTrigger';
 
 const NAV_ITEMS = [
   { href: '/', label: '홈' },
   { href: '/hackathons', label: '해커톤' },
   { href: '/rankings', label: '랭킹' },
   { href: '/camp', label: '팀 모집' },
+  { href: '/dashboard', label: '대시보드' },
 ];
 
 export default function Navbar() {
@@ -43,6 +45,8 @@ export default function Navbar() {
             );
           })}
         </ul>
+
+        <SearchTrigger />
 
         {/* Mobile toggle */}
         <button
