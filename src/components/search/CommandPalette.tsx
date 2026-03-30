@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getHackathons } from '@/lib/storage';
-import { getTeams } from '@/lib/storage';
+import { getHackathons, getTeams } from '@/lib/storage';
 
 interface SearchResult {
   id: string;
@@ -43,73 +42,71 @@ export default function CommandPalette() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Focus input on open
+  const [cachedData, setCachedData] = useState<{ hackathons: ReturnType<typeof getHackathons>; teams: ReturnType<typeof getTeams> } | null>(null);
+
+  // Focus input and cache data on open
   useEffect(() => {
     if (open) {
       setQuery('');
       setSelectedIndex(0);
+      setCachedData({
+        hackathons: getHackathons(),
+        teams: getTeams(),
+      });
       requestAnimationFrame(() => inputRef.current?.focus());
+    } else {
+      setCachedData(null);
     }
   }, [open]);
 
-  const getResults = useCallback((): SearchResult[] => {
+  const results = useMemo((): SearchResult[] => {
     const q = query.toLowerCase().trim();
     if (!q) return PAGES;
 
-    const results: SearchResult[] = [];
+    const items: SearchResult[] = [];
 
     // Pages
     PAGES.forEach((page) => {
       if (page.title.toLowerCase().includes(q)) {
-        results.push(page);
+        items.push(page);
       }
     });
 
     // Hackathons
-    try {
-      const hackathons = getHackathons();
-      hackathons.forEach((h) => {
-        const matchTitle = h.title.toLowerCase().includes(q);
-        const matchTags = h.tags.some((t) => t.toLowerCase().includes(q));
-        const matchStatus = h.status.toLowerCase().includes(q);
-        if (matchTitle || matchTags || matchStatus) {
-          results.push({
-            id: `hackathon-${h.slug}`,
-            category: '해커톤',
-            title: h.title,
-            subtitle: `${h.status} · ${h.tags.join(', ')}`,
-            href: `/hackathons/${h.slug}`,
-          });
-        }
-      });
-    } catch {
-      // storage may not be ready
-    }
+    const hackathons = cachedData?.hackathons ?? [];
+    hackathons.forEach((h) => {
+      const matchTitle = h.title.toLowerCase().includes(q);
+      const matchTags = h.tags.some((t) => t.toLowerCase().includes(q));
+      const matchStatus = h.status.toLowerCase().includes(q);
+      if (matchTitle || matchTags || matchStatus) {
+        items.push({
+          id: `hackathon-${h.slug}`,
+          category: '해커톤',
+          title: h.title,
+          subtitle: `${h.status} · ${h.tags.join(', ')}`,
+          href: `/hackathons/${h.slug}`,
+        });
+      }
+    });
 
     // Teams
-    try {
-      const teams = getTeams();
-      teams.forEach((t) => {
-        const matchName = t.name.toLowerCase().includes(q);
-        const matchSlug = t.hackathonSlug.toLowerCase().includes(q);
-        if (matchName || matchSlug) {
-          results.push({
-            id: `team-${t.teamCode}`,
-            category: '팀',
-            title: t.name,
-            subtitle: t.hackathonSlug,
-            href: `/camp?hackathon=${t.hackathonSlug}`,
-          });
-        }
-      });
-    } catch {
-      // storage may not be ready
-    }
+    const teams = cachedData?.teams ?? [];
+    teams.forEach((t) => {
+      const matchName = t.name.toLowerCase().includes(q);
+      const matchSlug = t.hackathonSlug.toLowerCase().includes(q);
+      if (matchName || matchSlug) {
+        items.push({
+          id: `team-${t.teamCode}`,
+          category: '팀',
+          title: t.name,
+          subtitle: t.hackathonSlug,
+          href: `/camp?hackathon=${t.hackathonSlug}`,
+        });
+      }
+    });
 
-    return results;
-  }, [query]);
-
-  const results = getResults();
+    return items;
+  }, [query, cachedData]);
 
   // Group results by category
   const grouped = results.reduce<Record<string, SearchResult[]>>((acc, r) => {
@@ -119,6 +116,11 @@ export default function CommandPalette() {
   }, {});
 
   const flatResults = results;
+
+  const navigate = useCallback((href: string) => {
+    setOpen(false);
+    router.push(href);
+  }, [router]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -142,7 +144,7 @@ export default function CommandPalette() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [open, selectedIndex, flatResults]);
+  }, [open, selectedIndex, flatResults, navigate]);
 
   // Scroll selected item into view
   useEffect(() => {
@@ -155,11 +157,6 @@ export default function CommandPalette() {
   useEffect(() => {
     setSelectedIndex(0);
   }, [query]);
-
-  function navigate(href: string) {
-    setOpen(false);
-    router.push(href);
-  }
 
   if (typeof window === 'undefined') return null;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { submitAndRegister } from '@/lib/submit-service';
 
 interface SingleSubmitFormProps {
@@ -13,23 +13,31 @@ export default function SingleSubmitForm({ slug, onSubmitted }: SingleSubmitForm
   const [teamName, setTeamName] = useState('');
   const [notes, setNotes] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const submittingRef = useRef(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!fileName.trim() || !teamName.trim()) return;
+    if (!fileName.trim() || !teamName.trim() || submittingRef.current) return;
 
-    submitAndRegister({
-      hackathonSlug: slug,
-      teamName: teamName.trim(),
-      artifactType: 'zip',
-      fileName: fileName.trim(),
-      notes: notes.trim() || undefined,
-    });
+    submittingRef.current = true;
+    setSubmitting(true);
+    try {
+      submitAndRegister({
+        hackathonSlug: slug,
+        teamName: teamName.trim(),
+        artifactType: 'zip',
+        fileName: fileName.trim(),
+        notes: notes.trim() || undefined,
+      });
 
-    setFileName('');
-    setNotes('');
-    setSubmitting(false);
-    onSubmitted();
+      setFileName('');
+      setNotes('');
+      setTeamName('');
+      onSubmitted();
+    } finally {
+      submittingRef.current = false;
+      setSubmitting(false);
+    }
   };
 
   return (
