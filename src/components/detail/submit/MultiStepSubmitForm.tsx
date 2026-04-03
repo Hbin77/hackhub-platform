@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { SubmissionItem } from '@/types/hackathon';
 import { addSubmission, addLeaderboardEntry } from '@/lib/storage';
 import { isSafeUrl } from '@/lib/validation';
@@ -16,6 +16,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
   const [teamName, setTeamName] = useState('');
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const submittingRef = useRef(false);
 
   const currentItem = items[currentStep];
   const isLastStep = currentStep === items.length - 1;
@@ -40,42 +41,48 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
     e.preventDefault();
     if (!teamName.trim()) return;
 
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setSubmitting(true);
 
-    items.forEach(item => {
-      const val = values[item.key] ?? '';
-      if (!val.trim()) return;
+    try {
+      items.forEach(item => {
+        const val = values[item.key] ?? '';
+        if (!val.trim()) return;
 
-      const isUrl = ['url', 'web', 'pdf_url'].includes(item.format);
-      if (isUrl && !isSafeUrl(val.trim())) return;
-      addSubmission({
-        id: `sub_${crypto.randomUUID()}`,
-        hackathonSlug: slug,
-        teamName: teamName.trim(),
-        artifactType: item.format,
-        ...(isUrl ? { url: val.trim() } : { text: val.trim() }),
-        step: item.key,
-        submittedAt: new Date().toISOString(),
+        const isUrl = ['url', 'web', 'pdf_url'].includes(item.format);
+        if (isUrl && !isSafeUrl(val.trim())) return;
+        addSubmission({
+          id: `sub_${crypto.randomUUID()}`,
+          hackathonSlug: slug,
+          teamName: teamName.trim(),
+          artifactType: item.format,
+          ...(isUrl ? { url: val.trim() } : { text: val.trim() }),
+          step: item.key,
+          submittedAt: new Date().toISOString(),
+        });
       });
-    });
 
-    addLeaderboardEntry(slug, {
-      rank: 0,
-      teamName: teamName.trim(),
-      score: 0,
-      submittedAt: new Date().toISOString(),
-      artifacts: {
-        webUrl: values['web'] ?? '',
-        pdfUrl: values['pdf'] ?? '',
-        planTitle: values['plan']?.slice(0, 50) ?? '',
-      },
-    });
+      addLeaderboardEntry(slug, {
+        rank: 0,
+        teamName: teamName.trim(),
+        score: 0,
+        submittedAt: new Date().toISOString(),
+        artifacts: {
+          webUrl: values['web'] ?? '',
+          pdfUrl: values['pdf'] ?? '',
+          planTitle: values['plan']?.slice(0, 50) ?? '',
+        },
+      });
 
-    setValues({});
-    setTeamName('');
-    setCurrentStep(0);
-    setSubmitting(false);
-    onSubmitted();
+      setValues({});
+      setTeamName('');
+      setCurrentStep(0);
+      onSubmitted();
+    } finally {
+      submittingRef.current = false;
+      setSubmitting(false);
+    }
   };
 
   const renderInput = (item: SubmissionItem) => {
@@ -88,6 +95,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
           value={value}
           onChange={e => updateValue(item.key, e.target.value)}
           placeholder={`${item.title} URL을 입력하세요`}
+          maxLength={2048}
           className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
         />
       );
@@ -99,6 +107,7 @@ export default function MultiStepSubmitForm({ slug, items, onSubmitted }: MultiS
         onChange={e => updateValue(item.key, e.target.value)}
         placeholder={`${item.title} 내용을 입력하세요`}
         rows={5}
+        maxLength={5000}
         className="w-full rounded-lg border border-border bg-bg-elevated px-3 py-2.5 text-sm text-text placeholder:text-text-tertiary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
       />
     );

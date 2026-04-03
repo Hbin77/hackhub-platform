@@ -1,21 +1,8 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { RankingEntry } from '@/types/ranking';
-import { getAllLeaderboards } from '@/lib/storage';
-import { useStorageReady } from '@/components/layout/StorageInitializer';
-import { computeRankings } from '@/lib/rankings';
-import RankingTable from '@/components/rankings/RankingTable';
+import { getAllLeaderboardsServer } from '@/lib/server-data';
+import RankingsContent from '@/components/rankings/RankingsContent';
 
 export default function RankingsPage() {
-  const ready = useStorageReady();
-  const [rankings, setRankings] = useState<RankingEntry[]>([]);
-
-  useEffect(() => {
-    if (!ready) return;
-    const leaderboards = getAllLeaderboards();
-    setRankings(computeRankings(leaderboards));
-  }, [ready]);
+  const leaderboards = getAllLeaderboardsServer();
 
   return (
     <div className="min-h-screen bg-bg-base">
@@ -26,7 +13,7 @@ export default function RankingsPage() {
             모든 해커톤의 성적을 종합한 팀별 순위입니다.
           </p>
         </div>
-        <RankingTable rankings={rankings} />
+        <RankingsContent serverLeaderboards={leaderboards} />
       </div>
     </div>
   );

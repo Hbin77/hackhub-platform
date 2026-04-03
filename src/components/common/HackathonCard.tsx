@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { HackathonListItem } from '@/types/hackathon';
 import StatusBadge from './StatusBadge';
 import { getDday } from '@/lib/date';
@@ -13,10 +14,11 @@ export default function HackathonCard({ hackathon }: { hackathon: HackathonListI
       className="group glass glass-hover block overflow-hidden rounded-xl transition-all duration-300 cursor-pointer"
     >
       <div className="aspect-[3/2] overflow-hidden rounded-t-xl bg-bg-elevated">
-        <img
+        <Image
           src={hackathon.thumbnailUrl}
           alt={hackathon.title}
-          loading="lazy"
+          width={600}
+          height={400}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       </div>

@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
   /* Backgrounds */
@@ -72,22 +71,22 @@
 body {
   background: var(--color-bg-base);
   color: var(--color-text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 .font-display {
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-family: var(--font-space-grotesk), var(--font-inter), sans-serif;
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, #6C5CE7, #00D2FF);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 }
 
 .gradient-border {

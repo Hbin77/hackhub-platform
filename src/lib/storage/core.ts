@@ -5,7 +5,12 @@ export const KEYS = {
   teams: 'hp_teams',
   submissions: 'hp_submissions',
   seeded: 'hp_seeded',
+  badges: 'hp_badges',
+  visitedHackathons: 'hp_visited_hackathons',
+  visitedPages: 'hp_visited_pages',
 } as const;
+
+export const SEED_TEAM_COUNT = 4;
 
 export function get<T>(key: string): T | null {
   if (typeof window === 'undefined') return null;
